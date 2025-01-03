@@ -1,12 +1,4 @@
-import { Button, buttonVariants } from "@/components/ui/button";
-import {
-  createDiscussionByUser,
-  fetchDiscussionsByUser,
-} from "@/features/discussion/discussionAction";
-import { AppDispatch, RootState } from "@/store/store";
-import { useEffect, useRef, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { Link, Outlet } from "react-router-dom";
+import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
@@ -15,34 +7,32 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-  DialogClose,
 } from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { discussionSchema } from "@/schemas/discussionSchema";
 import {
   DropdownMenu,
   DropdownMenuContent,
-  DropdownMenuGroup,
   DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuPortal,
-  DropdownMenuSeparator,
-  DropdownMenuShortcut,
-  DropdownMenuSub,
-  DropdownMenuSubContent,
-  DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import {
+  createDiscussionByUser,
+  fetchDiscussionsByUser,
+} from "@/features/discussion/discussionAction";
+import { discussionSchema } from "@/schemas/discussionSchema";
+import { AppDispatch, RootState } from "@/store/store";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useEffect } from "react";
+import { useForm } from "react-hook-form";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, Outlet } from "react-router-dom";
 
 const HomeLayout = () => {
   const { discussions, activeDiscussionId } = useSelector(
     (state: RootState) => state.discussions
   );
   const dispatch = useDispatch<AppDispatch>();
-  const [isDialogOpen, setIsDialogOpen] = useState(false);
   useEffect(() => {
     dispatch(fetchDiscussionsByUser({ userId: "676a4473105bfdcc23e1f560" }));
   }, []);
