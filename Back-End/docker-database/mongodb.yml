@@ -1,0 +1,28 @@
+version: “3.8”
+services:
+  mongo:
+    container_name: mongo
+    image: bitnami/mongodb:5.0.14
+    environment:
+      - MONGODB_ROOT_USERNAME=root
+      - MONGODB_ROOT_PASSWORD=123456
+      - MONGODB_USERNAME=user
+      - MONGODB_PASSWORD=123456
+    restart: unless-stopped
+    ports:
+      - 27017:27017
+    volumes:
+      - ./database/db:/bitnami/mongodb
+  mongo-express:
+    container_name: mexpress
+    image: ghcr.io/blackthornyugen/mongo-express-docker:v1.0.0
+    environment:
+      - ME_CONFIG_MONGODB_ENABLE_ADMIN=true
+      - ME_CONFIG_MONGODB_URL=mongodb://root:123456@mongo:27017/?authSource=admin
+      - ME_CONFIG_BASICAUTH_USERNAME=user
+      - ME_CONFIG_BASICAUTH_PASSWORD=123456
+    restart: unless-stopped
+    ports:
+      - 9000:8081
+    depends_on:
+      - mongo
